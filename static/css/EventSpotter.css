@@ -1,0 +1,16 @@
+#alert, #alertBottom, #found{
+    display: none;
+}
+
+img {
+    width: 400rem;
+}
+
+body {
+    background-color: #fafafa;
+}
+
+table {
+    height: 100%;
+    width: 100%;
+}

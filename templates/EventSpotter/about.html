@@ -1,0 +1,45 @@
+{% extends 'EventSpotter/base.html' %}
+{% load static %}
+{% block content %}
+  <div class="container rounded shadow p-5 my-4 border border-1 bg-white">
+      <div class="row align-items-center">
+        <div class="col-lg">
+          <div class="row"><h1>Welcome to Event Spotter!</h1></div>
+          <div class="row"><p class="lead">At Event Spotter, our passion lies in connecting
+              you with the heartbeat of entertainment. We're dedicated to simplifying your event
+              discovery process, ensuring you're always in-the-know about the latest concerts,
+              shows, festivals, and more.</p>
+            <p class="lead">Our Mission</p>
+            <p class="lead">Our mission is clear: to be your ultimate destination for event tracking
+                and alerts. We're here to make sure you never miss out on the experiences that resonate
+                with your interests and passions.</p>
+            <p class="lead">What We Offer</p>
+              <ul class="mx-3">
+                <li class="my-1">
+                    Comprehensive Event Tracking: Dive into a diverse array of events personalized to
+                    your preferences. From music gigs to cultural happenings, we curate an extensive
+                    selection just for you.</li>
+                <li class="my-1">
+                    Personalized Alerts: Stay ahead of the curve with tailored notifications. Get instant
+                    updates on ticket availability, newly announced events, and exclusive offers that match
+                    your tastes.</li>
+                <li class=" my-1">
+                    Seamless Experience: Our intuitive platform makes exploring, tracking, and sharing events
+                    effortless. Discover new favorites and share the excitement with friends and fellow event
+                    enthusiasts.</li>
+              </ul>
+            <p class="lead">How We Operate</p>
+            <p class="lead">We harness the power of the Ticketmaster API to deliver real-time event information.
+                Our dedicated team ensures that you have access to the most current event details and ticket
+                availability.</p>
+            <p class="lead">Thank you for choosing Event Spotter as your event companion. Let's embark on a journey
+                filled with unforgettable moments!</p>
+            <p class="lead">Warm regards,</p>
+            <p class="lead">The Event Spotter Team</p></div>
+        </div>
+        <div class="col-lg">
+            <img src="{% static 'images/logo.png' %}" class="img-fluid p-3" alt="logo">
+        </div>
+      </div>
+  </div>
+{% endblock %}

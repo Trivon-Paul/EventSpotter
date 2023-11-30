@@ -1,0 +1,56 @@
+{% extends 'EventSpotter/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container p-3 rounded shadow my-4 border border-1 bg-white">
+        <h3 class="m-3 text-body-secondary" id="items">View Saved Events</h3>
+        {% for event in events %}
+        <div class="card my-4 shadow border border-1 bg-white overflow-hidden">
+            <div class="row g-0 align-items-center">
+            <div class="col-md-4">
+              <img src="{{ event.image_url }}" class="img-fluid rounded-start p-2" id="image{{ forloop.counter0 }}" alt="image{{ forloop.counter0 }}">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-8"><h5 class="card-title text-start" id="event{{ forloop.counter0 }}">{{ event.event_name }}</h5></div>
+                      <div class="col-4">
+                        <div class="row">
+                            <h5 class="card-text text-success text-end" id="date{{ forloop.counter0 }}">{{ event.event_date }}</h5>
+                            <p class="card-text text-success text-end" id="time{{ forloop.counter0 }}">{{ event.event_time }}</p>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                <h5 class="card-text text-body-secondary" id="location{{ forloop.counter0 }}">{{ event.event_venue }}</h5><br><br>
+                      </div>
+                <div class="row">
+                  <p class="card-text text-body-secondary" id="address{{ forloop.counter0 }}">{{ event.event_address }}</p>
+                </div>
+                <div class="row">
+                  <p class="card-text text-body-secondary" id="state{{ forloop.counter0 }}">{{ event.event_city }}, {{ event.event_state }}</p><br>
+                </div>
+                      <a type="button" class="btn btn-primary" id="find{{ forloop.counter0 }}"
+                        href="{{ event.event_url }}">Find Tickets</a>
+                      <a type="button" class="btn btn-danger" id="delete{{ forloop.counter0 }}"
+                        href="{% url 'delete' event.id %}">Delete Tickets</a>
+              </div>
+            </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+
+ <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+
+    <script src="{% static 'js/EventSpotterDateChange.js' %}"></script>
+
+{% endblock %}
