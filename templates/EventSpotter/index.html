@@ -1,4 +1,106 @@
 {% extends 'EventSpotter/base.html' %}
+{% load static %}
+{% load lists %}
 {% block content %}
+<div class="container p-3 rounded shadow my-4 border border-1 bg-white">
+    <h1 class="display-2">Welcome {{ user }}!</h1>
+    <hr class="my-4">
+    <h1 class="display-5 my-2">Upcoming Events</h1>
+        {% for i in length %}
+        {% if forloop.counter0 < 5 %}
+        <div class="card my-4 shadow border border-1 bg-white overflow-hidden">
+            <div class="row g-0 align-items-center">
+            <div class="col-md-4">
+              <img src="{{ image_urls|index:i }}" class="img-fluid rounded-start p-2" id="section_add_image{{ i }}" alt="image{{ i }}">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-8"><h5 class="card-title text-start" id="section_add_event{{ i }}">{{ eventName|index:i }}</h5></div>
+                      <div class="col-4">
+                        <div class="row">
+                            <h5 class="card-text text-success text-end" id="section_add_date{{ i }}">{{ dates|index:i }}</h5>
+                            <p class="card-text text-success text-end" id="section_add_time{{ i }}">{{ times|index:i }}</p>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                <h5 class="card-text text-body-secondary" id="section_add_location{{ i }}">{{ venues|index:i }}</h5><br><br>
+                      </div>
+                <div class="row">
+                  <p class="card-text text-body-secondary" id="section_add_address{{ i }}">{{ addresses|index:i }}</p>
+                </div>
+                <div class="row">
+                  <p class="card-text text-body-secondary" id="section_add_state{{ i }}">{{ cities|index:i }}, {{ states|index:i }}</p><br>
+                </div>
+                      <a type="button" class="btn btn-primary" id="section_add_find{{ i }}"
+                        href="{{ urls|index:i }}">Find Tickets</a>
+                      <a type="button" class="btn btn-success" id="{{ i }}">Save Tickets</a>
+              </div>
+            </div>
+            </div>
+        </div>
+
+        {% endif %}
+        {% endfor %}
+    <div class="row justify-content-center mx-3">
+    <a href="{% url 'search' %}" class="btn btn-primary">Search</a>
+    </div>
+</div>
+
+<div class="container p-3 rounded shadow my-4 border border-1 bg-white">
+    <h1 class="display-5 my-2">Recently Saved</h1>
+        {% for event in events %}
+        {% if forloop.counter0 < 3 %}
+        <div class="card my-4 shadow border border-1 bg-white overflow-hidden">
+            <div class="row g-0 align-items-center">
+            <div class="col">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-8"><h5 class="card-title text-start" id="event{{ forloop.counter0 }}">{{ event.event_name }}</h5></div>
+                      <div class="col-4">
+                        <div class="row">
+                            <h5 class="card-text text-success text-end" id="date{{ forloop.counter0 }}">{{ event.event_date }}</h5>
+                            <p class="card-text text-success text-end" id="time{{ forloop.counter0 }}">{{ event.event_time }}</p>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                <h5 class="card-text text-body-secondary" id="location{{ forloop.counter0 }}">{{ event.event_venue }}</h5><br><br>
+                      </div>
+                <div class="row">
+                  <p class="card-text text-body-secondary" id="address{{ forloop.counter0 }}">{{ event.event_address }}</p>
+                </div>
+                <div class="row">
+                  <p class="card-text text-body-secondary" id="state{{ forloop.counter0 }}">{{ event.event_city }}, {{ event.event_state }}</p><br>
+                </div>
+                      <a type="button" class="btn btn-primary" id="find{{ forloop.counter0 }}"
+                        href="{{ event.event_url }}">Find Tickets</a>
+                      <a type="button" class="btn btn-danger" id="delete{{ forloop.counter0 }}"
+                        href="{% url 'delete' event.id %}">Delete Tickets</a>
+              </div>
+            </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    <div class="row justify-content-center mx-3">
+    <a href="{% url 'saved' %}" class="btn btn-primary">View All</a>
+    </div>
+</div>
+
+
+ <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+
+    <script src="{% static 'js/EventSpotterDateChange.js' %}"></script>
+    <script src="{% static 'js/EventSpotterAdd.js' %}"></script>
 
 {% endblock %}

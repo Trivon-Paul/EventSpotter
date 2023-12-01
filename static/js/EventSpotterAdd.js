@@ -1,20 +1,3 @@
-$('#search').click(getEvents);
-
-function getEvents() {
-    let eventName = $('#eventGiven').val();
-    let cityName = $('#cityGiven').val();
-    const sortOrder = 'date,desc';
-
-    if (eventName === '') {
-        $('#alert').show().text('Search term cannot be empty. Please enter a search term.');
-    } else if (cityName === '') {
-        $('#alert').show().text('City cannot be empty. Please enter a city.');
-    } else {
-        $('#alert').css('display', 'none');
-        $('#alertBottom').css('display', 'none');
-    }
-}
-
 function getCookie(c_name){
     if (document.cookie.length > 0)
     {
@@ -35,14 +18,14 @@ $('a').click(saveEvent);
 function saveEvent(){
     const username = $('#username').text();
     const id = $(this).attr('id');
-    const eventName = $('#event' + id).text();
-    const eventUrl = $('#find' + id).attr('href');
-    const imageUrl = $('#image' + id).attr('src');
-    const date = $('#date' + id).text();
-    const time = $('#time' + id).text();
-    const venue = $('#location' + id).text();
-    const address = $('#address' + id).text();
-    const cityState = $('#state' + id).text().split(', ');
+    const eventName = $('#section_add_event' + id).text();
+    const eventUrl = $('#section_add_find' + id).attr('href');
+    const imageUrl = $('#section_add_image' + id).attr('src');
+    const date = $('#section_add_date' + id).text();
+    const time = $('#section_add_time' + id).text();
+    const venue = $('#section_add_location' + id).text();
+    const address = $('#section_add_address' + id).text();
+    const cityState = $('#section_add_state' + id).text().split(', ');
     const state = cityState[1]
     const city = cityState[0];
     const urlUsed = 'http://127.0.0.1:8000/add'

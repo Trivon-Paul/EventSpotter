@@ -1,3 +1,5 @@
+from random import randint
+
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -88,7 +90,22 @@ def time_convert(time_in):
 
 @login_required(login_url='/EventSpotter/login')
 def index(request):
-    return render(request, 'EventSpotter/index.html')
+    username = str(request.user).capitalize()
+    events_saved = EventsSaved.objects.filter(user=request.user).values()
+    locations = ['New York City', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio',
+                 'San Diego', 'Dallas', 'San Jose', 'Austin', 'Jacksonville', 'San Francisco', 'Indianapolis',
+                 'Columbus', 'Charlotte', 'Seattle', 'Washington', 'Boston']
+    keywords = ['dance', 'music', 'art', 'comedy', 'concert']
+    location_get = locations[randint(0, len(locations)-1)]
+    keyword_get = keywords[randint(0, len(keywords)-1)]
+    events, urls, image_urls, dates, times, venues, addresses, states, cities = (
+        parse_data(event_search(keyword_get, location_get)))
+    number_of_events = range(0, len(events))
+    content = {'eventName': events, 'urls': urls, 'image_urls': image_urls, 'dates': dates,
+               'times': times, 'venues': venues, 'addresses': addresses, 'states': states,
+               'cities': cities, 'length': number_of_events, 'user': username, 'events': events_saved,
+               'username': request.user}
+    return render(request, 'EventSpotter/index.html', content)
 
 
 @login_required(login_url='/EventSpotter/login')
@@ -99,18 +116,21 @@ def search_view(request):
             form.save()
             location_get = form.cleaned_data["location"]
             keyword_get = form.cleaned_data["keyword"]
-            events, urls, image_urls, dates, times, venues, addresses, states, cities = (
-                parse_data(event_search(keyword_get, location_get)))
-            number_of_events = range(0, len(events))
-            content = {'events': events, 'urls': urls, 'image_urls': image_urls, 'dates': dates,
-                       'times': times, 'venues': venues, 'addresses': addresses, 'states': states,
-                       'cities': cities, 'length': number_of_events}
-            return render(request, 'EventSpotter/Results.html', context=content)
+            try:
+                events, urls, image_urls, dates, times, venues, addresses, states, cities = (
+                    parse_data(event_search(keyword_get, location_get)))
+                number_of_events = range(0, len(events))
+                content = {'events': events, 'urls': urls, 'image_urls': image_urls, 'dates': dates,
+                           'times': times, 'venues': venues, 'addresses': addresses, 'states': states,
+                           'cities': cities, 'length': number_of_events}
+                return render(request, 'EventSpotter/Results.html', context=content)
+            except:
+                return render(request, 'EventSpotter/Results.html', {'found': "false"})
     return render(request, 'EventSpotter/search.html', {'form': form})
 
 
 def results_view(request):
-    return render(request, 'EventSpotter/results.html', {'user': request.user})
+    return render(request, 'EventSpotter/results.html', {'username': request.user})
 
 
 def about_view(request):

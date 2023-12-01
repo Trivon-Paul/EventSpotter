@@ -3,34 +3,35 @@
 {% load lists %}
 {% block content %}
     <div class="container p-3 rounded shadow my-4 border border-1 bg-white">
-        <h3 class="m-3 text-body-secondary" id="items">{{ length|size }} Results Found</h3>
+        {% if found == true %}
+        <h3 class="m-3 text-body-secondary" id="section_add_items">{{ length|size }} Results Found</h3>
         {% for i in length %}
         <div class="card my-4 shadow border border-1 bg-white overflow-hidden">
             <div class="row g-0 align-items-center">
             <div class="col-md-4">
-              <img src="{{ image_urls|index:i }}" class="img-fluid rounded-start p-2" id="image{{ i }}" alt="image{{ i }}">
+              <img src="{{ image_urls|index:i }}" class="img-fluid rounded-start p-2" id="section_add_image{{ i }}" alt="image{{ i }}">
             </div>
             <div class="col-md-8">
               <div class="card-body">
                   <div class="row">
-                      <div class="col-8"><h5 class="card-title text-start" id="event{{ i }}">{{ events|index:i }}</h5></div>
+                      <div class="col-8"><h5 class="card-title text-start" id="section_add_event{{ i }}">{{ events|index:i }}</h5></div>
                       <div class="col-4">
                         <div class="row">
-                            <h5 class="card-text text-success text-end" id="date{{ i }}">{{ dates|index:i }}</h5>
-                            <p class="card-text text-success text-end" id="time{{ i }}">{{ times|index:i }}</p>
+                            <h5 class="card-text text-success text-end" id="section_add_date{{ i }}">{{ dates|index:i }}</h5>
+                            <p class="card-text text-success text-end" id="section_add_time{{ i }}">{{ times|index:i }}</p>
                         </div>
                     </div>
                   </div>
                   <div class="row">
-                <h5 class="card-text text-body-secondary" id="location{{ i }}">{{ venues|index:i }}</h5><br><br>
+                <h5 class="card-text text-body-secondary" id="section_add_location{{ i }}">{{ venues|index:i }}</h5><br><br>
                       </div>
                 <div class="row">
-                  <p class="card-text text-body-secondary" id="address{{ i }}">{{ addresses|index:i }}</p>
+                  <p class="card-text text-body-secondary" id="section_add_address{{ i }}">{{ addresses|index:i }}</p>
                 </div>
                 <div class="row">
-                  <p class="card-text text-body-secondary" id="state{{ i }}">{{ cities|index:i }}, {{ states|index:i }}</p><br>
+                  <p class="card-text text-body-secondary" id="section_add_state{{ i }}">{{ cities|index:i }}, {{ states|index:i }}</p><br>
                 </div>
-                      <a type="button" class="btn btn-primary" id="find{{ i }}"
+                      <a type="button" class="btn btn-primary" id="section_add_find{{ i }}"
                         href="{{ urls|index:i }}">Find Tickets</a>
                       <a type="button" class="btn btn-success" id="{{ i }}">Save Tickets</a>
               </div>
@@ -39,6 +40,9 @@
         </div>
 
         {% endfor %}
+    {% else %}
+        <h3 class="m-3 text-body-secondary">No Events Found</h3>
+    {% endif %}
     </div>
 
  <!-- JQuery -->

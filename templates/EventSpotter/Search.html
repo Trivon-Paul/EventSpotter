@@ -10,18 +10,14 @@
             </h1>
         </div></div>
 
-        <div class="row justify-content-center"><div class="col-8">
-          <form action="{% url 'search' %}" method="post" class="mt-4">
+          <form action="{% url 'search' %}" method="post" class="mt-4 justify-content-center input-group">
             {% csrf_token %}
-            <div class="input-group row  justify-content-center">
-                <div class="col">{{ form.keyword }}</div>
-                <div class="col">{{ form.location }}</div>
-                <div class="col"><button type="submit" class="btn btn-danger" id="search">SEARCH</button></div>
-            </div>
+                {{ form.keyword }}
+                {{ form.location }}
+                    <button type="submit" class="btn btn-danger" id="search">SEARCH</button>
 
           </form>
 
-        </div></div>
 
         <div class="row justify-content-center"><div class="col-8">
             <div class="alert alert-danger mt-3" role="alert" id="alert"></div>
