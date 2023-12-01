@@ -5,7 +5,6 @@ anaconda-navigator==1.9.12
 anaconda-project==0.8.3
 applaunchservices==0.2.1
 argh==0.26.2
-astroid @ file:///opt/concourse/worker/volumes/live/21fd14a9-2a7e-484b-7394-5a9912cdcf80/volume/astroid_1592498459180/work
 astropy==4.0.1.post1
 astunparse==1.6.3
 atomicwrites==1.4.0
