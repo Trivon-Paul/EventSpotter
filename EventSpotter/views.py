@@ -123,9 +123,9 @@ def search_view(request):
                 content = {'events': events, 'urls': urls, 'image_urls': image_urls, 'dates': dates,
                            'times': times, 'venues': venues, 'addresses': addresses, 'states': states,
                            'cities': cities, 'length': number_of_events}
-                return render(request, 'EventSpotter/Results.html', context=content)
+                return render(request, 'EventSpotter/results.html', context=content)
             except:
-                return render(request, 'EventSpotter/Results.html', {'found': "false"})
+                return render(request, 'EventSpotter/results.html', {'found': "false"})
     return render(request, 'EventSpotter/search.html', {'form': form})
 
 
