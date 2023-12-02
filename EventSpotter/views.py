@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
-import requests
+from requests import get
 
 from EventSpotter.forms import SearchForm, EventsSavedForm
 from EventSpotter.models import EventsSaved
@@ -45,7 +45,7 @@ def event_search(keyword, city):
     parameters = {"keyword": keyword,
                   "city": city,
                   "sort": "date,asc"}
-    data = requests.get(url, params=parameters)
+    data = get(url, params=parameters)
     return data.json()
 
 
