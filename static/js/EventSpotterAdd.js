@@ -28,7 +28,7 @@ function saveEvent(){
     const cityState = $('#section_add_state' + id).text().split(', ');
     const state = cityState[1]
     const city = cityState[0];
-    const urlUsed = 'http://127.0.0.1:8000/add'
+    const urlUsed = $('#home').attr('href') + 'add';
     
     const body = {
         user: username,
