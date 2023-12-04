@@ -53,6 +53,7 @@ function saveEvent(){
         success: function (data) {
             console.log(body);
             console.log(urlUsed);
+            $(this).text("Saved");
         }
     })
 }
