@@ -63,15 +63,18 @@ def parse_data(data):
     cities = []
 
     for i in range(1, number_of_events):
-        events.append(events_array[i]["name"])
-        urls.append(events_array[i]["url"])
-        image_urls.append(events_array[i]["images"][1]["url"])
-        dates.append(events_array[i]["dates"]["start"]["localDate"])
-        times.append(time_convert(events_array[i]["dates"]["start"]["localTime"]))
-        venues.append(events_array[i]["_embedded"]["venues"][0]["name"])
-        addresses.append(events_array[i]["_embedded"]["venues"][0]["address"]["line1"])
-        states.append(events_array[i]["_embedded"]["venues"][0]["state"]["stateCode"])
-        cities.append(events_array[i]["_embedded"]["venues"][0]["city"]["name"])
+        try:
+            events.append(events_array[i]["name"])
+            urls.append(events_array[i]["url"])
+            image_urls.append(events_array[i]["images"][1]["url"])
+            dates.append(events_array[i]["dates"]["start"]["localDate"])
+            times.append(time_convert(events_array[i]["dates"]["start"]["localTime"]))
+            venues.append(events_array[i]["_embedded"]["venues"][0]["name"])
+            addresses.append(events_array[i]["_embedded"]["venues"][0]["address"]["line1"])
+            states.append(events_array[i]["_embedded"]["venues"][0]["state"]["stateCode"])
+            cities.append(events_array[i]["_embedded"]["venues"][0]["city"]["name"])
+        except:
+            return events, urls, image_urls, dates, times, venues, addresses, states, cities
 
     return events, urls, image_urls, dates, times, venues, addresses, states, cities
 

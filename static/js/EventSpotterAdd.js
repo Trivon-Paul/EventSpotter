@@ -29,6 +29,7 @@ function saveEvent(){
     const state = cityState[1]
     const city = cityState[0];
     const urlUsed = $('#home').attr('href') + 'add';
+    $(this).text("Saved");
     
     const body = {
         user: username,
@@ -53,7 +54,6 @@ function saveEvent(){
         success: function (data) {
             console.log(body);
             console.log(urlUsed);
-            $(this).text("Saved");
         }
     })
 }
