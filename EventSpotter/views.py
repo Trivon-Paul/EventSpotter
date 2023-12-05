@@ -125,7 +125,7 @@ def search_view(request):
                 number_of_events = range(0, len(events))
                 content = {'events': events, 'urls': urls, 'image_urls': image_urls, 'dates': dates,
                            'times': times, 'venues': venues, 'addresses': addresses, 'states': states,
-                           'cities': cities, 'length': number_of_events}
+                           'cities': cities, 'length': number_of_events, 'username': request.user}
                 return render(request, 'EventSpotter/results.html', context=content)
             except:
                 return render(request, 'EventSpotter/results.html', {'found': "false"})
