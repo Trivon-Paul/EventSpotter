@@ -1,0 +1,29 @@
+{% extends 'EventSpotter/base.html' %}
+{% block content %}
+    <div class="row justify-content-center m-4">
+    <div class="col-lg-5">
+    <div class="card">
+    <div class="card-body p-4 rounded shadow border border-1 bg-white">
+    <h3 class="text-center">Enter location</h3>
+    <div class="justify-content-center row">
+        <form action="{% url 'location' %}" method="post">
+        {% csrf_token %}
+            <div class="row">
+                <div class="col text-center">{{ form.location.label }}: {{ form.location }}
+                <button type="submit" class="btn btn-success" id="location">Enter</button></div></div></form></div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+ <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+{% endblock %}
