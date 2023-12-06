@@ -1,5 +1,5 @@
 from django import forms
-from .models import Search
+from .models import Search, Location
 from .models import EventsSaved
 
 
@@ -23,3 +23,10 @@ class EventsSavedForm(forms.ModelForm):
         model = EventsSaved
         fields = ['user', 'event_name', 'event_url', 'image_url', 'event_date', 'event_time', 'event_venue',
                   'event_address', 'event_state', 'event_city']
+
+
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = ['user', 'location']
+

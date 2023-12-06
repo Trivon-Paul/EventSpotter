@@ -18,3 +18,8 @@ class EventsSaved(models.Model):
 class Search(models.Model):
     keyword = models.CharField(max_length=60)
     location = models.CharField(max_length=60)
+
+
+class Location(models.Model):
+    user = models.CharField(max_length=60, blank=True)
+    location = models.CharField(max_length=60)

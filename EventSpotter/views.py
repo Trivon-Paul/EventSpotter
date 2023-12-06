@@ -6,8 +6,8 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
 from requests import get
 
-from EventSpotter.forms import SearchForm, EventsSavedForm
-from EventSpotter.models import EventsSaved
+from EventSpotter.forms import SearchForm, EventsSavedForm, LocationForm
+from EventSpotter.models import EventsSaved, Location
 
 
 def login_view(request):
@@ -27,6 +27,8 @@ def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
+            location = Location(user=form.cleaned_data['username'], location='blank')
+            location.save()
             form.save()
             return redirect('login')
     else:
@@ -41,12 +43,20 @@ def logout_view(request):
 
 
 def event_search(keyword, city):
-    url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=KslWGouXriRWRSAPuh4pA43xDblNVF1f"
-    parameters = {"keyword": keyword,
-                  "city": city,
-                  "sort": "date,asc"}
-    data = get(url, params=parameters)
-    return data.json()
+    try:
+        url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=KslWGouXriRWRSAPuh4pA43xDblNVF1f"
+        parameters = {"keyword": keyword,
+                      "city": city,
+                      "sort": "date,asc"}
+        data = get(url, params=parameters)
+        return data.json()
+    except:
+        url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=KslWGouXriRWRSAPuh4pA43xDblNVF1f"
+        parameters = {"keyword": keyword,
+                      "city": city,
+                      "sort": "date,asc"}
+        data = get(url, params=parameters)
+        return data.json()
 
 
 def parse_data(data):
@@ -99,8 +109,29 @@ def index(request):
                  'San Diego', 'Dallas', 'San Jose', 'Austin', 'Jacksonville', 'San Francisco', 'Indianapolis',
                  'Columbus', 'Charlotte', 'Seattle', 'Washington', 'Boston']
     keywords = ['dance', 'music', 'art', 'comedy', 'concert']
-    location_get = locations[randint(0, len(locations)-1)]
-    keyword_get = keywords[randint(0, len(keywords)-1)]
+    location_get = locations[randint(0, len(locations) - 1)]
+    keyword_get = keywords[randint(0, len(keywords) - 1)]
+    location_saved = Location.objects.filter(user=request.user)
+    if location_saved.exists() and location_saved.values().first().get('location') != 'blank':
+        try:
+            events, urls, image_urls, dates, times, venues, addresses, states, cities = (
+                parse_data(event_search(keyword_get, location_saved.values().first().get('location'))))
+            number_of_events = range(0, len(events))
+            content = {'eventName': events, 'urls': urls, 'image_urls': image_urls, 'dates': dates,
+                       'times': times, 'venues': venues, 'addresses': addresses, 'states': states,
+                       'cities': cities, 'length': number_of_events, 'user': username, 'events': events_saved,
+                       'username': request.user}
+            return render(request, 'EventSpotter/index.html', content)
+        except:
+            events, urls, image_urls, dates, times, venues, addresses, states, cities = (
+                parse_data(event_search(keyword_get, location_get)))
+            number_of_events = range(0, len(events))
+            content = {'eventName': events, 'urls': urls, 'image_urls': image_urls, 'dates': dates,
+                       'times': times, 'venues': venues, 'addresses': addresses, 'states': states,
+                       'cities': cities, 'length': number_of_events, 'user': username, 'events': events_saved,
+                       'username': request.user}
+            return render(request, 'EventSpotter/index.html', content)
+
     events, urls, image_urls, dates, times, venues, addresses, states, cities = (
         parse_data(event_search(keyword_get, location_get)))
     number_of_events = range(0, len(events))
@@ -134,6 +165,19 @@ def search_view(request):
 
 def results_view(request):
     return render(request, 'EventSpotter/results.html', {'username': request.user})
+
+
+def location_view(request):
+    form = LocationForm(request.POST or None)
+    if request.method == 'POST':
+        form = LocationForm(request.POST)
+
+        if form.is_valid():
+            location_used = Location.objects.filter(user=request.user).first()
+            location_used.location = form.cleaned_data['location']
+            location_used.save()
+            return redirect('index')
+    return render(request, 'EventSpotter/location.html', {'form': form})
 
 
 def about_view(request):

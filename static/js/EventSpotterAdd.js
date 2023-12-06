@@ -29,7 +29,9 @@ function saveEvent(){
     const state = cityState[1]
     const city = cityState[0];
     const urlUsed = $('#home').attr('href') + 'add';
-    $(this).text("Saved");
+    if ($(this).text() === "Save Tickets"){
+        $(this).text("Saved");
+    }
     
     const body = {
         user: username,
