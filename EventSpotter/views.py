@@ -206,6 +206,6 @@ def events_saved_view(request):
 def delete_view(request, event_id):
     event = EventsSaved.objects.get(id=event_id)
     event.delete()
-    events_saved = EventsSaved.objects.all()
+    events_saved = EventsSaved.objects.filter(user=request.user).values()
     content = {'events': events_saved}
     return render(request, 'EventSpotter/saved.html', content)
